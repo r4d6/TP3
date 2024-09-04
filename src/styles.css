@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+.entete{
+    background-color: black;
+    color:aqua;
+    border-width: 7px;
+    border-style: solid;
+    border-color: gold;
+    border-radius: 25px;
+    padding: 5px;
+}
