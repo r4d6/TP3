@@ -1,4 +1,6 @@
-const tabDeveloppeurs: Developpeur[] =[
+import { Developpeur } from './../modele/developpeur';
+
+export const tabDeveloppeurs: Developpeur[] =[
     {
         id:1,
         nom:"Amstrong",

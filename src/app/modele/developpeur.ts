@@ -1,4 +1,4 @@
-class Developpeur{
+export class Developpeur{
     id:number;
     nom:string;
     prenom:string;

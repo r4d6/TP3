@@ -5,7 +5,13 @@
     {{titre}}</h1> 
   </section>
 
-  <app-connexion></app-connexion>
+  <app-connexion #conn
+     (ConnexionReussie) = lt.onConnexion($event)>
+  </app-connexion>
+
+  <app-liste-taches #lt
+      (quitterLT) = conn.onQuitterLT()>
+  </app-liste-taches>
 
 </div>
 

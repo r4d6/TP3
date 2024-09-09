@@ -1,0 +1,14 @@
+<section *ngIf="visible">
+    <h3>Liste des tâches du projet X:</h3>
+    
+    <table>
+        <tr *ngFor="let tac of listeTac">
+            <td>{{tac.titre}}</td><td>{{tac.objectif}}</td>  
+        </tr>
+    </table>
+
+
+
+
+    <button class="btn btn-danger" (click)="quitter()">Quitter</button>
+ </section>
