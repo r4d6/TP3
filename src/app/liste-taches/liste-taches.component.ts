@@ -15,12 +15,22 @@ import { tabTaches } from '../donnees/taches';
 export class ListeTachesComponent {
   visible=false;
   listeTac:Tache[] = new Array();
+  dev = new Developpeur();
 
   @Output() quitterLT=new EventEmitter<any>();
 
   onConnexion(dev:Developpeur)
   {
-     this.listeTac = tabTaches;
+     this.listeTac = new Array();
+     this.dev = dev;
+
+     for(let i=0; i<tabTaches.length; i++)
+     {
+       if(tabTaches[i].idProjet == this.dev.idProjet)
+       {
+          this.listeTac.push(tabTaches[i]);
+       }
+     }
      this.visible=true;
      tr(dev.prenom + " " + dev.nom + " connexion réussie!");
   }

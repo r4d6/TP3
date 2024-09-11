@@ -1,11 +1,34 @@
 <section *ngIf="visible">
-    <h3>Liste des tâches du projet X:</h3>
     
-    <table>
-        <tr *ngFor="let tac of listeTac">
+    <h1>Bienvenue {{dev.prenom}} {{dev.nom}} (<b>{{listeTac[0].nomProjet}}</b>)</h1>
+    <h5>Choisissez votre tâche:  </h5>
+    
+    <!-- <table>
+        
+        
+        
             <td>{{tac.titre}}</td><td>{{tac.objectif}}</td>  
         </tr>
-    </table>
+    </table> -->
+
+
+      <table class="table table-striped table-hover table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th>Numéro</th>
+              <th>Titre</th>
+              <th>Objectif</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tac of listeTac">
+              <td>{{tac.numero}}</td>
+              <td>{{tac.titre}}</td>
+              <td>{{tac.objectif}}</td>
+            </tr>
+          </tbody>
+        </table>
+ 
 
 
 
