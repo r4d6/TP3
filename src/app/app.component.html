@@ -6,12 +6,18 @@
   </section>
 
   <app-connexion #conn
-     (ConnexionReussie) = lt.onConnexion($event)>
+     (ConnexionReussie) = lt.onConnexion($event)
+     (ConnexionReussie) = onConnexion($event)>
   </app-connexion>
 
   <app-liste-taches #lt
-      (quitterLT) = conn.onQuitterLT()>
+      (quitterLT) = conn.onQuitterLT()
+      (demarrerSesTrav) = jour.onDemarrerSessTrav($event)>
   </app-liste-taches>
+
+  <app-journal #jour>
+
+  </app-journal>
 
 </div>
 

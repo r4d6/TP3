@@ -8,6 +8,7 @@ export const tabDeveloppeurs: Developpeur[] =[
         matricule:"1111111",
         motDePasse:"11",
         idProjet:1,
+        nomProjet:'Projet Alpha',
         etat:""        
     },
     {
@@ -17,6 +18,7 @@ export const tabDeveloppeurs: Developpeur[] =[
         matricule:"2222222",
         motDePasse:"11",
         idProjet:1,
+        nomProjet:'Projet Alpha',
         etat:""        
     },
     {
@@ -26,6 +28,7 @@ export const tabDeveloppeurs: Developpeur[] =[
         matricule:"3333333",
         motDePasse:"11",
         idProjet:2,
+        nomProjet:'Projet Omega',
         etat:""        
     }
 ]

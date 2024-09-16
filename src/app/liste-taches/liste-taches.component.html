@@ -1,17 +1,8 @@
 <section *ngIf="visible">
     
-    <h1>Bienvenue {{dev.prenom}} {{dev.nom}} (<b>{{listeTac[0].nomProjet}}</b>)</h1>
-    <h5>Choisissez votre tâche:  </h5>
+    <h1>Choisissez votre tâche:</h1>
     
-    <!-- <table>
-        
-        
-        
-            <td>{{tac.titre}}</td><td>{{tac.objectif}}</td>  
-        </tr>
-    </table> -->
-
-
+    
       <table class="table table-striped table-hover table-bordered">
           <thead class="table-dark">
             <tr>
@@ -22,7 +13,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let tac of listeTac">
-              <td>{{tac.numero}}</td>
+              <td (click)="demarrerSessionTravail(tac.id)">{{tac.numero}}</td>
               <td>{{tac.titre}}</td>
               <td>{{tac.objectif}}</td>
             </tr>

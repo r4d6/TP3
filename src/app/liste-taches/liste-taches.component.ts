@@ -18,6 +18,7 @@ export class ListeTachesComponent {
   dev = new Developpeur();
 
   @Output() quitterLT=new EventEmitter<any>();
+  @Output() demarrerSesTrav= new EventEmitter<Developpeur>();
 
   onConnexion(dev:Developpeur)
   {
@@ -34,6 +35,16 @@ export class ListeTachesComponent {
      this.visible=true;
      tr(dev.prenom + " " + dev.nom + " connexion réussie!");
   }
+
+
+  demarrerSessionTravail(idTac:number)
+  {
+    this.visible=false;
+    tr("Début d'une session de travail sur tache " + idTac );
+    this.demarrerSesTrav.emit(this.dev);
+
+  }
+
 
   quitter()
   {

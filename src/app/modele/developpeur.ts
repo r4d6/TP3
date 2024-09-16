@@ -5,6 +5,7 @@ export class Developpeur{
     matricule:string;
     motDePasse:string;
     idProjet:number;
+    nomProjet="";
     etat:string;
 
     constructor()
