@@ -16,6 +16,6 @@ export class Developpeur{
         this.matricule="";
         this.motDePasse="";
         this.idProjet=0;
-        this.etat="";
+        this.etat="inactif";
     }
 }

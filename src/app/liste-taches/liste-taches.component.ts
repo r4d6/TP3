@@ -4,6 +4,7 @@ import { Developpeur } from '../modele/developpeur';
 import { tr } from '../util';
 import { Tache } from '../modele/tache';
 import { tabTaches } from '../donnees/taches';
+import { SessionTravail } from '../modele/sessionTravail';
 
 @Component({
   selector: 'app-liste-taches',
@@ -18,7 +19,7 @@ export class ListeTachesComponent {
   dev = new Developpeur();
 
   @Output() quitterLT=new EventEmitter<any>();
-  @Output() demarrerSesTrav= new EventEmitter<Developpeur>();
+  @Output() demarrerSesTrav= new EventEmitter<{dev:Developpeur,sess:SessionTravail}>();
 
   onConnexion(dev:Developpeur)
   {
@@ -40,9 +41,19 @@ export class ListeTachesComponent {
   demarrerSessionTravail(idTac:number)
   {
     this.visible=false;
-    tr("Début d'une session de travail sur tache " + idTac );
-    this.demarrerSesTrav.emit(this.dev);
+    let st = new SessionTravail();
+    st.idTache = idTac;
+    this.dev.etat = "actif";
 
+    tr("Début d'une session de travail sur tache " + idTac );
+    this.demarrerSesTrav.emit({dev:this.dev, sess:st});
+
+  }
+
+  onchangerTache(dev:Developpeur)
+  {
+    this.dev = dev;
+    this.visible=true;
   }
 
 

@@ -1,7 +1,15 @@
 <section *ngIf="visible">
-    
-    <h1>Choisissez votre tâche:</h1>
-    
+   <article class="row">
+    <button class="col-1 btn btn-danger" (click)="quitter()">
+      <img width=50 src="images/quitter.png" alt="non dispo"  title="Quitter l'application">
+   </button>
+   <button class="col-1 btn btn-info" (click)="quitter()">
+    <img width=50 src="images/stats.png" alt="non dispo"  title="Consulter les statistiques du projet">
+  </button>
+</article>   
+
+   <article class="row">
+    <h3>Choisissez votre tâche:</h3>
     
       <table class="table table-striped table-hover table-bordered">
           <thead class="table-dark">
@@ -13,16 +21,11 @@
           </thead>
           <tbody>
             <tr *ngFor="let tac of listeTac">
-              <td (click)="demarrerSessionTravail(tac.id)">{{tac.numero}}</td>
+              <td class="btn btn-danger" (click)="demarrerSessionTravail(tac.id)" title="démarrer une session de travail sur cette tâche">{{tac.numero}}</td>
               <td>{{tac.titre}}</td>
               <td>{{tac.objectif}}</td>
             </tr>
           </tbody>
         </table>
- 
-
-
-
-
-    <button class="btn btn-danger" (click)="quitter()">Quitter</button>
+     </article>
  </section>

@@ -3,6 +3,6 @@ export class SessionTravail{
     idDev:number= 0;;
     idTache:number = 0;;
     idProjet:number=0;
-    debut:string="2024-09-16 17:21:30";
-    fin:string="";
+    debut:Date = new Date();
+    fin:Date = new Date("0001-01-01 00:00:01");
 }
