@@ -43,6 +43,16 @@ export class ListeTachesComponent {
     this.visible=false;
     let st = new SessionTravail();
     st.idTache = idTac;
+
+    for(let i=0; i<tabTaches.length; i++)
+    {
+      if (idTac == tabTaches[i].id)
+      {
+        st.numTache = tabTaches[i].numero;
+        break;
+      }
+    }
+
     this.dev.etat = "actif";
 
     tr("Début d'une session de travail sur tache " + idTac );

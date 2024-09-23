@@ -68,7 +68,7 @@ export class ConnexionComponent {
     }
   }
 
-  onQuitterLT()
+  onQuitter()
   {
     this.matricule = "";
     this.motDePasse = "";

@@ -11,12 +11,13 @@
   </app-connexion>
 
   <app-liste-taches #lt
-      (quitterLT) = conn.onQuitterLT()
+      (quitterLT) = conn.onQuitter()
       (demarrerSesTrav) = jour.onDemarrerSessTrav($event)>
   </app-liste-taches>
 
   <app-journal #jour
-     (changerTache) = lt.onchangerTache($event)>
+     (changerTache) = lt.onchangerTache($event)
+     (quitterJournal) = conn.onQuitter()>
   </app-journal>
 
 </div>

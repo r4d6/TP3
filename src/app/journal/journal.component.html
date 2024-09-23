@@ -5,18 +5,32 @@
       <img width=50 src="images/quitter.png" alt="non dispo"  title="Quitter l'application">
    </button>
 
-   <button class="col-1 btn btn-info" (click)="quitter()">
+   <button class="col-1 btn btn-info" (click)="ouvrirStats()">
     <img width=50 src="images/stats.png" alt="non dispo"  title="Consulter les statistiques du projet">
   </button>
 
-  <button class="col-1 btn btn-warning" (click)="arreterSessTrav()">
+  <button *ngIf="btnArreterVisible" class="col-1 btn btn-warning" (click)="arreterSessTrav()">
     <img width=50 src="images/stop.png" alt="non dispo"  title="Arrêter de travailler sur cette tâche">
   </button>
 
   <button class="col-1 btn btn-success" (click)="changerDeTache()">
     <img width=50 src="images/changerTache.png" alt="non dispo"  title="Arrêter votre session sur la tâche actuelle et choisir une nouvelle tâche">
   </button>
-</article>    
+
+  <button class="col-1 btn btn-info" (click)="commenter()">
+    <img width=50 src="images/commentaire.png" alt="non dispo"  title="Commenter votre travail">
+  </button>
+</article>   
+
+<article *ngIf="dlgCommentaireVisible" class="col-4">
+   <h3>Rdirez votre commentaire</h3>
+   <label>Commentaire:</label>
+   <textarea rows="3" cols="35" [(ngModel)]= commCourant.contenu></textarea>
+
+   <button (click)="enregistrerCommentaire()">Enregistrer</button>
+   <button (click)="annulerCommentaire()">Annuler</button>
+
+</article>
 
 <article>
     <h3 class="{{dev.etat}}">Journal {{dev.etat}}</h3>
@@ -24,13 +38,20 @@
         <thead class="table-dark">
           <tr>
             <th>Date</th>
-            <th>Id Tache</th>
+            <th>Heure</th>
+            <th>num tac</th>
+            <th>Type</th>
+            <th>Contenu</th>
+            
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let sessTrav of historique">
-            <td>{{dateISO(sessTrav.debut)}}</td>
-            <td>{{sessTrav.idTache}}</td>
+          <tr *ngFor="let fait of tabFaits">
+            <td>{{fait.date}}</td>
+            <td>{{fait.heure}}</td>
+            <td>{{fait.numTache}}</td>
+            <td><img height=25 src='images/{{fait.type}}.png'></td>
+            <td>{{fait.contenu}}></td>
           </tr>
         </tbody>
       </table>
