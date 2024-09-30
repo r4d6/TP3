@@ -87,6 +87,12 @@ export class JournalComponent {
         this.tabFaits.push(new Fait(this.historique[i], false))
       }
     }
+
+    for(let i=0; i<this.tabCommentaires.length; i++)
+    {
+      this.tabFaits.push(new Fait(this.historique[0], false, this.tabCommentaires[i]))
+    }
+
     this.tabFaits.sort(this.comparaisonDate);
     this.enleverDateRedondantes();
   } 
@@ -134,9 +140,10 @@ export class JournalComponent {
   enregistrerCommentaire()
   {
     this.dlgCommentaireVisible = false;
-    this.tabCommentaires.push(this.commCourant);
     this.commCourant.horodateur = new Date();
-    tr(this.commCourant.contenu);
+    this.tabCommentaires.push(this.commCourant);
+    this.commCourant = new Commentaire();
+    this.rafraichirJournal();
   }
 
   annulerCommentaire()

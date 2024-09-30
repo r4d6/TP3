@@ -35,6 +35,7 @@ export class Fait{
         {
             this.contenu = comm.contenu;
             horodate =  dateISO(comm.horodateur);
+            this.type = "commentaire";
         }
 
         tr(horodate);
