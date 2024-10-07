@@ -5,6 +5,7 @@ import { tr } from '../util';
 import { Tache } from '../modele/tache';
 import { tabTaches } from '../donnees/taches';
 import { SessionTravail } from '../modele/sessionTravail';
+import { JvService } from '../jv.service';
 
 @Component({
   selector: 'app-liste-taches',
@@ -21,18 +22,40 @@ export class ListeTachesComponent {
   @Output() quitterLT=new EventEmitter<any>();
   @Output() demarrerSesTrav= new EventEmitter<{dev:Developpeur,sess:SessionTravail}>();
 
+  constructor(private jvSrv:JvService)
+  {}
+
   onConnexion(dev:Developpeur)
   {
      this.listeTac = new Array();
      this.dev = dev;
 
-     for(let i=0; i<tabTaches.length; i++)
+     this.jvSrv.getTaches().subscribe(
+       {
+          next:
+            tabTac =>
+            {
+              tr("Recup de " + tabTac.length + " tâches", true,true);
+              this.listeTac = tabTac;
+            },
+
+          error:
+            err=>
+              {
+                tr("Erreur 44 HTTP: Vérifiez le serveur", true, true);
+              }  
+       }
+     );
+
+    
+
+     /*for(let i=0; i<tabTaches.length; i++)
      {
        if(tabTaches[i].idProjet == this.dev.idProjet)
        {
           this.listeTac.push(tabTaches[i]);
        }
-     }
+     }*/
      this.visible=true;
      tr(dev.prenom + " " + dev.nom + " connexion réussie!");
   }

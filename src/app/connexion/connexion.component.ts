@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { tr } from '../util';
 import { tabDeveloppeurs } from '../donnees/developpeurs';
 import { Developpeur } from '../modele/developpeur';
+import { JvService } from '../jv.service';
 
 
 @Component({
@@ -24,6 +25,9 @@ export class ConnexionComponent {
   motDePasse="";
   dev:Developpeur = new Developpeur();
 
+  constructor(private jvSrv:JvService)
+  {}
+
   @Output() ConnexionReussie = new EventEmitter<Developpeur>();
 
   //-----------------------------------
@@ -35,7 +39,12 @@ export class ConnexionComponent {
     this.triche();
     tr("tentative de connexion de " + this.matricule + " avec le mot de passe:" + this.motDePasse);
 
-    for(let i=0; i < tabDeveloppeurs.length; i++)
+    this.jvSrv.getConnexion().subscribe(
+      
+    )
+
+
+    /*for(let i=0; i < tabDeveloppeurs.length; i++)
     {
       if (this.matricule === tabDeveloppeurs[i].matricule)
       {
@@ -49,7 +58,7 @@ export class ConnexionComponent {
             break;
          }
       }
-    }
+    }*/
     if (trouve)
       tr("Bingo");
     else
