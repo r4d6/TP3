@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Developpeur } from '../modele/developpeur';
 import { tr } from '../util';
 import { Tache } from '../modele/tache';
-import { tabTaches } from '../donnees/taches';
 import { SessionTravail } from '../modele/sessionTravail';
 import { JvService } from '../jv.service';
 
@@ -30,12 +29,12 @@ export class ListeTachesComponent {
      this.listeTac = new Array();
      this.dev = dev;
 
-     this.jvSrv.getTaches().subscribe(
+     this.jvSrv.getTaches(dev.idProjet).subscribe(
        {
           next:
             tabTac =>
             {
-              tr("Recup de " + tabTac.length + " tâches", true,true);
+              tr("Recup de " + tabTac.length + " tâches");
               this.listeTac = tabTac;
             },
 
@@ -67,14 +66,14 @@ export class ListeTachesComponent {
     let st = new SessionTravail();
     st.idTache = idTac;
 
-    for(let i=0; i<tabTaches.length; i++)
+    /*for(let i=0; i<tabTaches.length; i++)
     {
       if (idTac == tabTaches[i].id)
       {
         st.numTache = tabTaches[i].numero;
         break;
       }
-    }
+    }*/
 
     this.dev.etat = "actif";
 

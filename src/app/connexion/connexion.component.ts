@@ -7,7 +7,6 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { tr } from '../util';
-import { tabDeveloppeurs } from '../donnees/developpeurs';
 import { Developpeur } from '../modele/developpeur';
 import { JvService } from '../jv.service';
 
@@ -39,30 +38,30 @@ export class ConnexionComponent {
     this.triche();
     tr("tentative de connexion de " + this.matricule + " avec le mot de passe:" + this.motDePasse);
 
-    this.jvSrv.getConnexion().subscribe(
-      
-    )
-
-
-    /*for(let i=0; i < tabDeveloppeurs.length; i++)
-    {
-      if (this.matricule === tabDeveloppeurs[i].matricule)
+    this.jvSrv.getConnexion(this.matricule, this.motDePasse).subscribe(
       {
-         if (this.motDePasse === tabDeveloppeurs[i].motDePasse)
+      next:
+      dev =>
+      {
+         if (dev != undefined)
          {
-            trouve=true;
-            this.visible= false;
-            this.dev = tabDeveloppeurs[i];
-            this.ConnexionReussie.emit(this.dev);
-
-            break;
+          tr("Connexion OK");
+          this.visible= false;
+          this.dev = dev;
+          this.ConnexionReussie.emit(this.dev);
          }
+         else
+         {
+          tr("Erreur 56: info de connexion invalide", true);
+         }
+      },
+      error:
+        err =>
+      {
+        tr("Erreur 51: problème avec le serveur",true);
       }
-    }*/
-    if (trouve)
-      tr("Bingo");
-    else
-      tr("Erreur de connexion", true);
+    }
+    );
   }
 
   //-----------------------------------

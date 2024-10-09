@@ -11,6 +11,7 @@
   </app-connexion>
 
   <app-liste-taches #lt
+      (quitterLT) = onQuitterLT();
       (quitterLT) = conn.onQuitter()
       (demarrerSesTrav) = jour.onDemarrerSessTrav($event)>
   </app-liste-taches>
