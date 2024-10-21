@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+//-----------------------------------
+  //   Fichier : 
+  //   Par:      Alain Martel
+  //   Date :    2024-10-21
+  //-----------------------------------
+
+  import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ConnexionComponent} from './connexion/connexion.component';
 import { ListeTachesComponent } from './liste-taches/liste-taches.component';

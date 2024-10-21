@@ -1,4 +1,10 @@
-export class Tache{
+//-----------------------------------
+  //   Fichier : 
+  //   Par:      Alain Martel
+  //   Date :    2024-10-21
+  //-----------------------------------
+
+  export class Tache{
     id:number;
     numero:string;
     titre:string;

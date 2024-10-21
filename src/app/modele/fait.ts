@@ -1,4 +1,10 @@
-import { dateISO, tr } from "../util";
+//-----------------------------------
+  //   Fichier : 
+  //   Par:      Alain Martel
+  //   Date :    2024-10-21
+  //-----------------------------------
+
+  import { dateISO, tr } from "../util";
 import { Commentaire } from "./commentaire";
 import { SessionTravail } from "./sessionTravail";
 
@@ -22,12 +28,12 @@ export class Fait{
 
            if (traiteDebut)
            {
-              horodate = dateISO(st.debut);
+              horodate = st.debut;
               this.type = "debut";
            }
            else
            {
-             horodate = dateISO(st.fin);
+             horodate = st.fin;
              this.type="fin";
            }
         }

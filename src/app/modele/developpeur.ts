@@ -1,4 +1,10 @@
-export class Developpeur{
+//-----------------------------------
+  //   Fichier : 
+  //   Par:      Alain Martel
+  //   Date :    2024-10-21
+  //-----------------------------------
+
+  export class Developpeur{
     id:number;
     nom:string;
     prenom:string;

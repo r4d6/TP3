@@ -1,3 +1,9 @@
+//-----------------------------------
+  //   Fichier : 
+  //   Par:      Alain Martel
+  //   Date :    2024-10-21
+  //-----------------------------------
+
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Developpeur } from '../modele/developpeur';
@@ -6,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { SessionTravail } from '../modele/sessionTravail';
 import { Fait } from '../modele/fait';
 import { Commentaire } from '../modele/commentaire';
+import { JvService } from '../jv.service';
 
 @Component({
   selector: 'app-journal',
@@ -21,26 +28,50 @@ export class JournalComponent {
   dlgCommentaireVisible=false;
   commCourant:Commentaire = new Commentaire();
 
-  historique: SessionTravail[] = new Array();
+  tabSessTrav: SessionTravail[] = new Array();
   tabCommentaires:Commentaire[] = new Array();
   tabFaits:Fait[] = new Array();
   @Output() changerTache = new EventEmitter<Developpeur>();
   @Output() quitterJournal=new EventEmitter<any>();
 
+  constructor(private jvSrv:JvService)
+  {
 
-  onDemarrerSessTrav(mesInfos: {dev:Developpeur, sess:SessionTravail}, )
+  }
+
+
+  onDemarrerSessTrav(mesInfos: {dev:Developpeur, idTache:number}, )
   {
     this.btnArreterVisible = true;
     this.dev = mesInfos.dev;
     //let sessTravCour = mesInfos.sess;
-    this.historique.push(mesInfos.sess);
+//    this.tabSessTrav.push(mesInfos.sess);
     this.visible=true;
 
-    
+    //tr("id tac:" + mesInfos.idTache, true);
 
-    tr("Démarrage d'une session de travail sur la tache: " + mesInfos.sess.idTache);
-    tr("Sess trav débute : " + dateISO(mesInfos.sess.debut));
-    this.rafraichirJournal();
+    this.jvSrv.postSessionTravail(mesInfos.dev.id, mesInfos.idTache).subscribe(
+       {
+         next:
+           idSessTrav=>
+           {
+             //tr("La sess trav " + idSessTrav + " a été insérée", true);
+             this.rafraichirJournal();
+           }
+           ,
+         error:
+           err=>
+           {
+            tr("Erreur 60 vérifiwer le serveur");
+           }
+       }
+    )
+
+    //tr("Démarrage d'une session de travail sur la tache: " + mesInfos.idTac);
+    //tr("Sess trav débute : " + dateISO(mesInfos.sess.debut));
+
+    // Insérer le code qui contacte le serveur pour inserer la sess travail
+
   }
 
   quitter()
@@ -65,10 +96,10 @@ export class JournalComponent {
   {
     this.btnArreterVisible = false;
     this.dev.etat='inactif';
-    let ind = this.historique.length - 1;
-    this.historique[ind].fin = new Date();
+    let ind = this.tabSessTrav.length - 1;
+    this.tabSessTrav[ind].fin = "";
 
-    let duree = this.historique[ind].fin.getTime() - this.historique[ind].debut.getTime();
+    let duree = 13000; //this.tabSessTrav[ind].fin.getTime() - this.tabSessTrav[ind].debut.getTime();
     let dureeTrunc = Math.trunc(duree/1000);
     tr("Cette sees de trav a duré : " + dureeTrunc + " secondes" );
     this.rafraichirJournal();
@@ -77,24 +108,44 @@ export class JournalComponent {
   rafraichirJournal()
   {
     this.tabFaits = new Array();
-    for(let i=0; i<this.historique.length; i++)
-    {
-      this.tabFaits.push(new Fait(this.historique[i]));
 
-      let dateNulle = new Date('2100-01-01');
-      if (this.historique[i].fin < dateNulle )
+    this.jvSrv.getSessTravPourUnDev(this.dev.id).subscribe(
       {
-        this.tabFaits.push(new Fait(this.historique[i], false))
+        next:
+          tabSessTrav=>
+          {
+            //tr("Reception de " + tabSessTrav.length + " sess trav", true);
+            this.tabSessTrav = tabSessTrav; 
+            for(let i=0; i<this.tabSessTrav.length; i++)
+              {
+                this.tabFaits.push(new Fait(this.tabSessTrav[i]));
+          
+                let dateNulle = new Date('2100-01-01');
+                if (this.tabSessTrav[i].fin != undefined)
+                {
+                  this.tabFaits.push(new Fait(this.tabSessTrav[i], false))
+                }
+              }
+          
+              for(let i=0; i<this.tabCommentaires.length; i++)
+              {
+                this.tabFaits.push(new Fait(this.tabSessTrav[0], false, this.tabCommentaires[i]))
+              }
+          
+              this.tabFaits.sort(this.comparaisonDate);
+              this.enleverDateRedondantes();
+          },
+
+        error: 
+          err=>
+          {
+           tr("Erreur 117 vérifiwer le serveur");
+          } 
       }
-    }
+    );
 
-    for(let i=0; i<this.tabCommentaires.length; i++)
-    {
-      this.tabFaits.push(new Fait(this.historique[0], false, this.tabCommentaires[i]))
-    }
 
-    this.tabFaits.sort(this.comparaisonDate);
-    this.enleverDateRedondantes();
+
   } 
 
 

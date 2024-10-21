@@ -19,7 +19,7 @@ export class ListeTachesComponent {
   dev = new Developpeur();
 
   @Output() quitterLT=new EventEmitter<any>();
-  @Output() demarrerSesTrav= new EventEmitter<{dev:Developpeur,sess:SessionTravail}>();
+  @Output() demarrerSesTrav= new EventEmitter<{dev:Developpeur,idTache:number}>();
 
   constructor(private jvSrv:JvService)
   {}
@@ -62,23 +62,16 @@ export class ListeTachesComponent {
 
   demarrerSessionTravail(idTac:number)
   {
+    //tr("id tac 65:" + idTac, true);
+
     this.visible=false;
-    let st = new SessionTravail();
-    st.idTache = idTac;
-
-    /*for(let i=0; i<tabTaches.length; i++)
-    {
-      if (idTac == tabTaches[i].id)
-      {
-        st.numTache = tabTaches[i].numero;
-        break;
-      }
-    }*/
-
+    //let st = new SessionTravail();
+    //st.idTache = idTac;
+    
     this.dev.etat = "actif";
 
     tr("Début d'une session de travail sur tache " + idTac );
-    this.demarrerSesTrav.emit({dev:this.dev, sess:st});
+    this.demarrerSesTrav.emit({dev:this.dev, idTache:idTac});
 
   }
 

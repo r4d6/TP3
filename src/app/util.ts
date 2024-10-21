@@ -1,4 +1,10 @@
-export function tr(msg:string, alertOn=false, consoleOn:boolean=true)
+//-----------------------------------
+  //   Fichier : 
+  //   Par:      Alain Martel
+  //   Date :    2024-10-21
+  //-----------------------------------
+
+  export function tr(msg:string, alertOn=false, consoleOn:boolean=true)
 {
   if (consoleOn)
     console.log(msg);
@@ -17,3 +23,5 @@ export function dateISO(date:Date) {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
+export const urlSrv = "http://localhost/jv24-srv/";
