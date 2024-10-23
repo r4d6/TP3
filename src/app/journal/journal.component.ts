@@ -29,6 +29,7 @@ export class JournalComponent {
   commCourant:Commentaire = new Commentaire();
 
   tabSessTrav: SessionTravail[] = new Array();
+  sessTravCourante:SessionTravail = new SessionTravail();
   tabCommentaires:Commentaire[] = new Array();
   tabFaits:Fait[] = new Array();
   @Output() changerTache = new EventEmitter<Developpeur>();
@@ -88,7 +89,8 @@ export class JournalComponent {
   changerDeTache()
   {
     this.visible=false;
-    this.arreterSessTrav();
+    if (this.dev.etat == 'actif')
+       this.arreterSessTrav();
     this.changerTache.emit(this.dev);
   }
 
@@ -96,13 +98,24 @@ export class JournalComponent {
   {
     this.btnArreterVisible = false;
     this.dev.etat='inactif';
-    let ind = this.tabSessTrav.length - 1;
-    this.tabSessTrav[ind].fin = "";
 
-    let duree = 13000; //this.tabSessTrav[ind].fin.getTime() - this.tabSessTrav[ind].debut.getTime();
-    let dureeTrunc = Math.trunc(duree/1000);
-    tr("Cette sees de trav a duré : " + dureeTrunc + " secondes" );
-    this.rafraichirJournal();
+    let idSessTrav = this.tabSessTrav[this.tabSessTrav.length - 1].id;
+    this.jvSrv.putSessionTravail(idSessTrav).subscribe(
+      {
+        next:
+          nbSessTravMAJ =>
+          {
+            tr("Session " + idSessTrav + " bien mise à jour!", true);
+            this.rafraichirJournal();
+          },
+
+        error:
+          err=>
+            {
+              tr("Erreur 112 vérifiez le serveur");
+            }  
+      }
+    )
   }
 
   rafraichirJournal()
@@ -116,6 +129,7 @@ export class JournalComponent {
           {
             //tr("Reception de " + tabSessTrav.length + " sess trav", true);
             this.tabSessTrav = tabSessTrav; 
+            this.sessTravCourante = this.tabSessTrav[this.tabSessTrav.length-1];
             for(let i=0; i<this.tabSessTrav.length; i++)
               {
                 this.tabFaits.push(new Fait(this.tabSessTrav[i]));
@@ -191,10 +205,29 @@ export class JournalComponent {
   enregistrerCommentaire()
   {
     this.dlgCommentaireVisible = false;
-    this.commCourant.horodateur = new Date();
-    this.tabCommentaires.push(this.commCourant);
-    this.commCourant = new Commentaire();
+
+    tr("Sess" + this.sessTravCourante.id + "\ndev" + this.dev.id +"\nContenu" +  this.commCourant.contenu, true );
+
+    this.jvSrv.postCommentaire(this.sessTravCourante.id, this.dev.id,this.commCourant.contenu).subscribe(
+      {
+        next:
+          idNeoComm=>
+          {
+            tr("Commentaire " + idNeoComm + " bien enregistré", true);
+          },
+          error:
+          err=>
+          {
+            tr("Erreur 218 véerifez le server", true);
+          }
+      }
+
+    )
+
+
     this.rafraichirJournal();
+    this.commCourant = new Commentaire();
+
   }
 
   annulerCommentaire()

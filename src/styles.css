@@ -9,9 +9,11 @@
 }
 
 .actif{
-    color: green;
+    color:bisque;
+    background-color: green;
 }
 
 .inactif{
-    color: red;
+    color:gold;
+    background-color: red;
 }

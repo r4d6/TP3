@@ -61,6 +61,23 @@ export class JvService {
     return this.http.get<Tache[]>(url);
   }
 
+  postCommentaire(idSess:number, idDev:number, contenu:string)
+  {
+    let url = urlSrv + "postCommentaire.php";
+    let params:HttpParams = new HttpParams(
+      {
+         fromObject :
+         {
+           idDev:idDev,
+           idSession:idSess,
+           contenu:contenu
+         }
+      }
+    );
+    return this.http.post<number>(url, params);
+
+  }
+
   postSessionTravail(idDev:number, idTache:number)
   {
     let url = urlSrv + "postSessionTravail.php";
@@ -74,5 +91,20 @@ export class JvService {
       }
     );
     return this.http.post<number>(url, params);
+  }
+
+  putSessionTravail(idSessTrav:number)
+  {
+    let url = urlSrv + "putSessionTravail.php";
+    let params:HttpParams = new HttpParams(
+      {
+         fromObject :
+         {
+           idSessTrav:idSessTrav
+         }
+      }
+    );
+    return this.http.post<number>(url, params);
+   
   }
 }
