@@ -3,6 +3,7 @@
   //   Fichier : 
   //   Par:      Alain Martel
   //   Date :    2024-10-09
+  //   modifié par : 
   //-----------------------------------
 -->
 <div class='container'>
@@ -13,8 +14,9 @@
   </section>
 
   <app-connexion #conn
-     (ConnexionReussie) = lt.onConnexion($event)
-     (ConnexionReussie) = onConnexion($event)>
+  (ConnexionReussieInactif) = lt.onConnexion($event)
+  (ConnexionReussieActif) = jour.onConnexion($event)
+  (ConnexionReussieInactif) = onConnexion($event)>
   </app-connexion>
 
   <app-liste-taches #lt

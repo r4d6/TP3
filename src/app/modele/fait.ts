@@ -1,7 +1,8 @@
 //-----------------------------------
-  //   Fichier : 
+  //   Fichier : fait.ts
   //   Par:      Alain Martel
   //   Date :    2024-10-21
+  //   modifié par : 
   //-----------------------------------
 
   import { dateISO, tr } from "../util";
@@ -44,7 +45,7 @@ export class Fait{
             this.type = "commentaire";
         }
 
-        tr(horodate);
+        //tr(horodate);
         let tabInfoDate = horodate.split(" ");
         this.date = tabInfoDate[0];
         this.heure = tabInfoDate[1];

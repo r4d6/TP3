@@ -1,3 +1,10 @@
+//-----------------------------------
+  //   Fichier : listeTaches.ts
+  //   Par:      Alain Martel
+  //   Date :    2024-10-21
+  //   Modiifié: 
+  //-----------------------------------
+
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Developpeur } from '../modele/developpeur';
@@ -21,9 +28,15 @@ export class ListeTachesComponent {
   @Output() quitterLT=new EventEmitter<any>();
   @Output() demarrerSesTrav= new EventEmitter<{dev:Developpeur,idTache:number}>();
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   constructor(private jvSrv:JvService)
   {}
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   onConnexion(dev:Developpeur)
   {
      this.listeTac = new Array();
@@ -45,48 +58,36 @@ export class ListeTachesComponent {
               }  
        }
      );
-
-    
-
-     /*for(let i=0; i<tabTaches.length; i++)
-     {
-       if(tabTaches[i].idProjet == this.dev.idProjet)
-       {
-          this.listeTac.push(tabTaches[i]);
-       }
-     }*/
      this.visible=true;
      tr(dev.prenom + " " + dev.nom + " connexion réussie!");
   }
 
-
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   demarrerSessionTravail(idTac:number)
   {
-    //tr("id tac 65:" + idTac, true);
-
     this.visible=false;
-    //let st = new SessionTravail();
-    //st.idTache = idTac;
-    
     this.dev.etat = "actif";
-
-    tr("Début d'une session de travail sur tache " + idTac );
     this.demarrerSesTrav.emit({dev:this.dev, idTache:idTac});
-
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   onchangerTache(dev:Developpeur)
   {
     this.dev = dev;
     this.visible=true;
   }
 
-
-  quitter()
+   //------------------------------------------------
+  //
+  //------------------------------------------------
+   quitter()
   {
      this.visible = false;
      this.quitterLT.emit();
 
   }
-
 }

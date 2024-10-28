@@ -2,9 +2,9 @@
   //   Fichier : 
   //   Par:      Alain Martel
   //   Date :    2024-10-21
+  //   modifié par : 
   //-----------------------------------
-
-  import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ConnexionComponent} from './connexion/connexion.component';
 import { ListeTachesComponent } from './liste-taches/liste-taches.component';
@@ -24,17 +24,24 @@ export class AppComponent {
   titre = 'Jourvie 24';
   dev = new Developpeur();
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   constructor(private jvSrv:JvService)
   {
-
-     
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   onQuitterLT()
   {
     this.titre = 'Jourvie 24';
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   onConnexion(dev:Developpeur)
   {
      this.jvSrv.getProjets().subscribe(
@@ -60,7 +67,5 @@ export class AppComponent {
         }
       }   
     );
-     
-  }
-
+   }
 }

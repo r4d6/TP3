@@ -4,16 +4,22 @@
   //   Date :    2024-10-21
   //-----------------------------------
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   export function tr(msg:string, alertOn=false, consoleOn:boolean=true)
-{
-  if (consoleOn)
-    console.log(msg);
+  {
+    if (consoleOn)
+     console.log(msg);
 
-  if (alertOn)
-    alert(msg);
-}
+    if (alertOn)
+     alert(msg);
+  }
 
-export function dateISO(date:Date) {
+  //------------------------------------------------
+  //
+  //------------------------------------------------
+  export function dateISO(date:Date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0'); // Ajout de 1 car les mois sont indexés à partir de 0
   const day = String(date.getDate()).padStart(2, '0');
@@ -24,4 +30,8 @@ export function dateISO(date:Date) {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-export const urlSrv = "http://localhost/jv24-srv/";
+  //------------------------------------------------
+  //
+  //------------------------------------------------
+  //export const urlSrv = "http://localhost/jv24-srv/";
+  export const urlSrv = "https://amartel.techinfo-cstj.ca/jv24-srv/";

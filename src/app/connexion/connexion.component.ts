@@ -2,6 +2,7 @@
   //   Fichier : connexion.component.ts
   //   Par:      Alain Martel
   //   Date :    2024-09-09
+  //   Modiifié par : 
   //-----------------------------------
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -27,7 +28,8 @@ export class ConnexionComponent {
   constructor(private jvSrv:JvService)
   {}
 
-  @Output() ConnexionReussie = new EventEmitter<Developpeur>();
+  @Output() ConnexionReussieInactif = new EventEmitter<Developpeur>();
+  @Output() ConnexionReussieActif   = new EventEmitter<Developpeur>();
 
   //-----------------------------------
   // 
@@ -46,9 +48,15 @@ export class ConnexionComponent {
          if (dev != undefined)
          {
           tr("Connexion OK");
+
           this.visible= false;
           this.dev = dev;
-          this.ConnexionReussie.emit(this.dev);
+
+          if (this.dev.etat == 'inactif')
+             this.ConnexionReussieInactif.emit(this.dev);
+          else
+             this.ConnexionReussieActif.emit(this.dev);
+
          }
          else
          {
@@ -76,6 +84,9 @@ export class ConnexionComponent {
     }
   }
 
+  //-----------------------------------
+  // 
+  //-----------------------------------
   onQuitter()
   {
     this.matricule = "";

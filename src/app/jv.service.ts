@@ -1,7 +1,8 @@
 //-----------------------------------
-  //   Fichier : 
+  //   Fichier : jv.service.ts
   //   Par:      Alain Martel
   //   Date :    2024-10-21
+  //   Modifié par: 
   //-----------------------------------
 
  import { Injectable } from '@angular/core';
@@ -17,9 +18,15 @@ import { SessionTravail } from './modele/sessionTravail';
 })
 export class JvService {
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   constructor(private http:HttpClient) { }
 
   
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   getConnexion(pMat:string, pMdp:string)
   {
     let url = urlSrv + "getConnexion.php";
@@ -35,12 +42,18 @@ export class JvService {
     return this.http.post<Developpeur>(url, params);
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   getProjets()
   {
     let url = urlSrv + "getProjets.php?mat";
     return this.http.get<Projet[]>(url);
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   getSessTravPourUnDev(idDev:number)
   {
     let url = urlSrv + "getSessTravPourUnDev.php";
@@ -55,12 +68,18 @@ export class JvService {
     return this.http.post<SessionTravail[]>(url, params);
   }
   
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   getTaches(idProj:number)
   {
     let url = urlSrv + "getTaches.php?idProj=" + idProj;
     return this.http.get<Tache[]>(url);
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   postCommentaire(idSess:number, idDev:number, contenu:string)
   {
     let url = urlSrv + "postCommentaire.php";
@@ -78,6 +97,9 @@ export class JvService {
 
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   postSessionTravail(idDev:number, idTache:number)
   {
     let url = urlSrv + "postSessionTravail.php";
@@ -93,6 +115,9 @@ export class JvService {
     return this.http.post<number>(url, params);
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   putSessionTravail(idSessTrav:number)
   {
     let url = urlSrv + "putSessionTravail.php";

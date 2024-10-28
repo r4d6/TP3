@@ -1,7 +1,8 @@
 //-----------------------------------
-  //   Fichier : 
+  //   Fichier : journal.ts
   //   Par:      Alain Martel
   //   Date :    2024-10-21
+  //   Modiifié: 
   //-----------------------------------
 
 import { Component, EventEmitter, Output } from '@angular/core';
@@ -35,57 +36,72 @@ export class JournalComponent {
   @Output() changerTache = new EventEmitter<Developpeur>();
   @Output() quitterJournal=new EventEmitter<any>();
 
+
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   constructor(private jvSrv:JvService)
   {
-
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
+  onConnexion(dev:Developpeur)
+  {
+    this.visible=true;
+    this.btnArreterVisible = true;
+    this.dev = dev;
+    this.rafraichirJournal();
+  }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   onDemarrerSessTrav(mesInfos: {dev:Developpeur, idTache:number}, )
   {
     this.btnArreterVisible = true;
     this.dev = mesInfos.dev;
-    //let sessTravCour = mesInfos.sess;
-//    this.tabSessTrav.push(mesInfos.sess);
+ 
     this.visible=true;
-
-    //tr("id tac:" + mesInfos.idTache, true);
-
     this.jvSrv.postSessionTravail(mesInfos.dev.id, mesInfos.idTache).subscribe(
        {
          next:
            idSessTrav=>
            {
-             //tr("La sess trav " + idSessTrav + " a été insérée", true);
+           
              this.rafraichirJournal();
            }
            ,
          error:
            err=>
            {
-            tr("Erreur 60 vérifiwer le serveur");
+            tr("Erreur 60 vérifiwer le serveur", true);
            }
        }
     )
-
-    //tr("Démarrage d'une session de travail sur la tache: " + mesInfos.idTac);
-    //tr("Sess trav débute : " + dateISO(mesInfos.sess.debut));
-
-    // Insérer le code qui contacte le serveur pour inserer la sess travail
-
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   quitter()
   {
     this.visible = false;
     this.quitterJournal.emit();
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   ouvrirStats()
   {
     tr("ouverture des stats");
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   changerDeTache()
   {
     this.visible=false;
@@ -94,6 +110,9 @@ export class JournalComponent {
     this.changerTache.emit(this.dev);
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   arreterSessTrav()
   {
     this.btnArreterVisible = false;
@@ -105,7 +124,6 @@ export class JournalComponent {
         next:
           nbSessTravMAJ =>
           {
-            tr("Session " + idSessTrav + " bien mise à jour!", true);
             this.rafraichirJournal();
           },
 
@@ -118,6 +136,9 @@ export class JournalComponent {
     )
   }
 
+   //------------------------------------------------
+  //
+  //------------------------------------------------
   rafraichirJournal()
   {
     this.tabFaits = new Array();
@@ -127,20 +148,22 @@ export class JournalComponent {
         next:
           tabSessTrav=>
           {
-            //tr("Reception de " + tabSessTrav.length + " sess trav", true);
+            // J'ai récupérer les sess trav de ce développeur
             this.tabSessTrav = tabSessTrav; 
             this.sessTravCourante = this.tabSessTrav[this.tabSessTrav.length-1];
             for(let i=0; i<this.tabSessTrav.length; i++)
               {
+                // Pour chaque session de travail on va chercher le debut et la fin
                 this.tabFaits.push(new Fait(this.tabSessTrav[i]));
-          
-                let dateNulle = new Date('2100-01-01');
+                          
                 if (this.tabSessTrav[i].fin != undefined)
                 {
+                  // Traitement de la fin 
                   this.tabFaits.push(new Fait(this.tabSessTrav[i], false))
                 }
               }
           
+              // Traitement des commentaires
               for(let i=0; i<this.tabCommentaires.length; i++)
               {
                 this.tabFaits.push(new Fait(this.tabSessTrav[0], false, this.tabCommentaires[i]))
@@ -153,16 +176,16 @@ export class JournalComponent {
         error: 
           err=>
           {
-           tr("Erreur 117 vérifiwer le serveur");
+           tr("Erreur 117 vérifiwer le serveur", true);
           } 
       }
     );
-
-
-
   } 
 
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   comparaisonDate(f1:Fait, f2:Fait)
   {
     if (f1.date > f2.date)
@@ -176,10 +199,12 @@ export class JournalComponent {
       return 1;
 
     return 0;
-
   }
 
-  enleverDateRedondantes()
+  //------------------------------------------------
+  //
+  //------------------------------------------------
+enleverDateRedondantes()
   {
     let dateUnique = "9999-12-31";
     if (this.tabFaits[0] !== undefined)
@@ -196,24 +221,28 @@ export class JournalComponent {
     }
   }
 
+   //------------------------------------------------
+  //
+  //------------------------------------------------
   commenter()
   {
-    //tr("Commneter", true);
-    this.dlgCommentaireVisible = true;
+     this.dlgCommentaireVisible = true;
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   enregistrerCommentaire()
   {
     this.dlgCommentaireVisible = false;
-
-    tr("Sess" + this.sessTravCourante.id + "\ndev" + this.dev.id +"\nContenu" +  this.commCourant.contenu, true );
+ 
 
     this.jvSrv.postCommentaire(this.sessTravCourante.id, this.dev.id,this.commCourant.contenu).subscribe(
       {
         next:
           idNeoComm=>
           {
-            tr("Commentaire " + idNeoComm + " bien enregistré", true);
+            tr("Commentaire " + idNeoComm + " bien enregistré");
           },
           error:
           err=>
@@ -221,21 +250,24 @@ export class JournalComponent {
             tr("Erreur 218 véerifez le server", true);
           }
       }
-
     )
-
 
     this.rafraichirJournal();
     this.commCourant = new Commentaire();
-
   }
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   annulerCommentaire()
   {
     this.dlgCommentaireVisible = false;
   }
 
 
+  //------------------------------------------------
+  //
+  //------------------------------------------------
   dateISO(d:Date)
   {
      return dateISO(d);
