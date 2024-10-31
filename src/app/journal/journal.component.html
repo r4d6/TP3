@@ -9,11 +9,7 @@
 <section *ngIf="visible">
   <article class="row">
 
-    <button class="col-1 btn btn-danger" (click)="quitter()">
-      <img width=50 src="images/quitter.png" alt="non dispo"  title="Quitter l'application">
-   </button>
-
-   <button class="col-1 btn btn-info" (click)="ouvrirStats()">
+     <button *ngIf="btnStatsVisible" class="col-1 btn btn-info" (click)="ouvrirStats()">
     <img width=50 src="images/stats.png" alt="non dispo"  title="Consulter les statistiques du projet">
   </button>
 
@@ -21,11 +17,15 @@
     <img width=50 src="images/stop.png" alt="non dispo"  title="Arrêter de travailler sur cette tâche">
   </button>
 
-  <button class="col-1 btn btn-success" (click)="changerDeTache()">
+  <button *ngIf="btnChangerTache && dev.etat=='actif'" class="col-1 btn btn-success" (click)="changerDeTache()">
     <img width=50 src="images/changerTache.png" alt="non dispo"  title="Arrêter votre session sur la tâche actuelle et choisir une nouvelle tâche">
   </button>
 
-  <button class="col-1 btn btn-info" (click)="commenter()">
+  <button *ngIf="btnChangerTache && dev.etat!='actif'" class="col-1 btn btn-success" (click)="changerDeTache()">
+    <img width=50 src="images/changerTache.png" alt="non dispo"  title="Choisir une nouvelle tâche">
+  </button>
+
+  <button *ngIf="btnCommentaireVisible" class="col-1 btn btn-info" (click)="commenter()">
     <img width=50 src="images/commentaire.png" alt="non dispo"  title="Commenter votre travail">
   </button>
 
@@ -37,12 +37,11 @@
 </article>   
 
 <article *ngIf="dlgCommentaireVisible" class="col-4">
-   <h3>Rdirez votre commentaire</h3>
-   <label>Commentaire:</label>
+   <h3>Rédigez votre commentaire:
    <textarea rows="3" cols="35" [(ngModel)]= commCourant.contenu></textarea>
-
-   <button (click)="enregistrerCommentaire()">Enregistrer</button>
-   <button (click)="annulerCommentaire()">Annuler</button>
+  </h3>
+   <button class="btn btn-success" (click)="enregistrerCommentaire()">Enregistrer</button>
+   <button class="btn btn-info" (click)="annulerCommentaire()">Annuler</button>
 
 </article>
 

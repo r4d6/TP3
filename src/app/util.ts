@@ -33,5 +33,5 @@
   //------------------------------------------------
   //
   //------------------------------------------------
-  //export const urlSrv = "http://localhost/jv24-srv/";
-  export const urlSrv = "https://amartel.techinfo-cstj.ca/jv24-srv/";
+  export const urlSrv = "http://localhost/3D4/jv24-srv/";
+  //export const urlSrv = "https://amartel.techinfo-cstj.ca/jv24-srv/";

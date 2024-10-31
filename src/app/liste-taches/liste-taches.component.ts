@@ -42,6 +42,7 @@ export class ListeTachesComponent {
      this.listeTac = new Array();
      this.dev = dev;
 
+     //tr("getTaches pour porjet " + dev.idProjet);
      this.jvSrv.getTaches(dev.idProjet).subscribe(
        {
           next:
@@ -77,7 +78,8 @@ export class ListeTachesComponent {
   //------------------------------------------------
   onchangerTache(dev:Developpeur)
   {
-    this.dev = dev;
+
+    this.onConnexion(dev);
     this.visible=true;
   }
 

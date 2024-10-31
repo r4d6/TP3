@@ -26,6 +26,9 @@ export class JournalComponent {
   dev = new Developpeur()
   visible=false;
   btnArreterVisible=true;
+  btnCommentaireVisible=true;
+  btnChangerTache=true;
+  btnStatsVisible=true;
   dlgCommentaireVisible=false;
   commCourant:Commentaire = new Commentaire();
 
@@ -61,6 +64,8 @@ export class JournalComponent {
   onDemarrerSessTrav(mesInfos: {dev:Developpeur, idTache:number}, )
   {
     this.btnArreterVisible = true;
+    this.btnChangerTache = true;
+    this.btnCommentaireVisible = true;
     this.dev = mesInfos.dev;
  
     this.visible=true;
@@ -82,15 +87,7 @@ export class JournalComponent {
     )
   }
 
-  //------------------------------------------------
-  //
-  //------------------------------------------------
-  quitter()
-  {
-    this.visible = false;
-    this.quitterJournal.emit();
-  }
-
+ 
   //------------------------------------------------
   //
   //------------------------------------------------
@@ -116,7 +113,10 @@ export class JournalComponent {
   arreterSessTrav()
   {
     this.btnArreterVisible = false;
+    this.btnCommentaireVisible = false;
+
     this.dev.etat='inactif';
+
 
     let idSessTrav = this.tabSessTrav[this.tabSessTrav.length - 1].id;
     this.jvSrv.putSessionTravail(idSessTrav).subscribe(
@@ -227,6 +227,10 @@ enleverDateRedondantes()
   commenter()
   {
      this.dlgCommentaireVisible = true;
+     this.btnCommentaireVisible = false;
+     this.btnArreterVisible = false;
+     this.btnChangerTache = false;
+     this.btnStatsVisible = false;
   }
 
   //------------------------------------------------
@@ -235,6 +239,10 @@ enleverDateRedondantes()
   enregistrerCommentaire()
   {
     this.dlgCommentaireVisible = false;
+    this.btnCommentaireVisible = true;
+    this.btnArreterVisible = true;
+    this.btnChangerTache = true;  
+    this.btnStatsVisible = true;  
  
 
     this.jvSrv.postCommentaire(this.sessTravCourante.id, this.dev.id,this.commCourant.contenu).subscribe(
@@ -251,9 +259,10 @@ enleverDateRedondantes()
           }
       }
     )
-
+    this.tabCommentaires.push(this.commCourant);
     this.rafraichirJournal();
     this.commCourant = new Commentaire();
+
   }
 
   //------------------------------------------------
@@ -261,7 +270,13 @@ enleverDateRedondantes()
   //------------------------------------------------
   annulerCommentaire()
   {
+    this.commCourant = new Commentaire();
     this.dlgCommentaireVisible = false;
+    this.btnCommentaireVisible = true;
+    this.btnArreterVisible = true;
+    this.btnChangerTache = true;  
+    this.btnStatsVisible = true;   
+
   }
 
 
