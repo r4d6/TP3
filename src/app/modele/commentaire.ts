@@ -11,5 +11,5 @@
     idSession=0;
     idDev=0;
     contenu="";
-    horodateur=new Date();
+    horodateur="2025-01-01 00:00:01";
 }

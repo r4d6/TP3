@@ -251,6 +251,9 @@ enleverDateRedondantes()
           idNeoComm=>
           {
             tr("Commentaire " + idNeoComm + " bien enregistré");
+            this.tabCommentaires.push(this.commCourant);
+            this.rafraichirJournal();
+            this.commCourant = new Commentaire();
           },
           error:
           err=>
@@ -259,9 +262,6 @@ enleverDateRedondantes()
           }
       }
     )
-    this.tabCommentaires.push(this.commCourant);
-    this.rafraichirJournal();
-    this.commCourant = new Commentaire();
 
   }
 
