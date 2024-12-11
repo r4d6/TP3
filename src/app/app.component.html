@@ -2,8 +2,8 @@
 //-----------------------------------
   //   Fichier : 
   //   Par:      Alain Martel
-  //   Date :    2024-10-09
-  //   modifié par : 
+  //   Date :    2024-12-10
+  //   modifié par : David Moussette
   //-----------------------------------
 -->
 <div class='container'>
@@ -11,13 +11,15 @@
     <h1>
     <img width=50px src="images/jourvie.png" alt="non dispo">
     {{titre}}</h1> 
+    <h3 *ngIf="!connecte">Par : David Moussette</h3>
   </section>
 
   <app-connexion #conn
   (ConnexionReussieInactif) = lt.onConnexion($event)
   (ConnexionReussieActif) = jour.onConnexion($event)
   (ConnexionReussieInactif) = onConnexion($event)
-  (ConnexionReussieActif) = onConnexion($event)>
+  (ConnexionReussieActif) = onConnexion($event)
+  (ConnexionAdmin) = admin.onConnexion()>
   </app-connexion>
 
   <app-liste-taches #lt
@@ -30,6 +32,10 @@
      (changerTache) = lt.onchangerTache($event)
      (quitterJournal) = conn.onQuitter()>
   </app-journal>
+
+  <app-admin #admin>
+
+  </app-admin>
 
 </div>
 

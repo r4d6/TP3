@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { tr } from '../util';
 import { Developpeur } from '../modele/developpeur';
 import { JvService } from '../jv.service';
+import { AppComponent } from '../app.component';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class ConnexionComponent {
 
   @Output() ConnexionReussieInactif = new EventEmitter<Developpeur>();
   @Output() ConnexionReussieActif   = new EventEmitter<Developpeur>();
+  @Output() ConnexionAdmin = new EventEmitter()
 
   //-----------------------------------
   // 
@@ -39,6 +41,14 @@ export class ConnexionComponent {
     let trouve=false;
     this.triche();
     tr("tentative de connexion de " + this.matricule + " avec le mot de passe:" + this.motDePasse);
+
+    if(this.matricule == "admin" && this.motDePasse == "11")
+    {
+      this.ConnexionAdmin.emit()
+      this.visible= false;
+      
+      return
+    }
 
     this.jvSrv.getConnexion(this.matricule, this.motDePasse).subscribe(
       {

@@ -1,8 +1,8 @@
 //-----------------------------------
   //   Fichier : 
   //   Par:      Alain Martel
-  //   Date :    2024-10-21
-  //   modifié par : 
+  //   Date :    2024-12-10
+  //   modifié par : David Moussette
   //-----------------------------------
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
@@ -12,17 +12,20 @@ import { JournalComponent } from './journal/journal.component';
 import { Developpeur } from './modele/developpeur';
 import { JvService } from './jv.service';
 import { tr } from './util';
+import { CommonModule } from '@angular/common';
+import { AdminComponent } from "./admin/admin.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ConnexionComponent,ListeTachesComponent, JournalComponent],
+  imports: [RouterOutlet, ConnexionComponent, ListeTachesComponent, JournalComponent, CommonModule, AdminComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   titre = 'Jourvie 24';
   dev = new Developpeur();
+  connecte = false
 
   //------------------------------------------------
   //
@@ -37,6 +40,7 @@ export class AppComponent {
   onQuitterLT()
   {
     this.titre = 'Jourvie 24';
+    this.connecte = false
   }
 
   //------------------------------------------------
@@ -57,6 +61,7 @@ export class AppComponent {
                  this.dev = dev;
                  this.dev.nomProjet = projets[i].nom;
                  this.titre = "Jourvie 24, " + this.dev.prenom + " " + this.dev.nom + " ( " + this.dev.nomProjet + " )";
+                 this.connecte = true
               }
            }
         },

@@ -3,7 +3,8 @@
 //-----------------------------------
   //   Fichier : journal.html
   //   Par:      Alain Martel
-  //   Date :    2024-10-09
+  //   Date :    2024-12-10
+  //   modifié par : David Moussette
   //-----------------------------------
 -->
 <section *ngIf="visible">
@@ -29,9 +30,9 @@
     <img width=50 src="images/commentaire.png" alt="non dispo"  title="Commenter votre travail">
   </button>
 
-  <h3 *ngIf="dev.etat=='actif'; else blocInactif" class="col-4 {{dev.etat}}">Journal {{dev.etat}} sur {{sessTravCourante.numTache}}</h3>
+  <h3 *ngIf="dev.etat=='actif'; else blocInactif" class="col-4 {{dev.etat}}">Journal {{dev.etat}} sur {{sessTravCourante.numTache}} depuis {{timer()}}</h3>
   <ng-template #blocInactif>
-    <h3 class="col-4 {{dev.etat}}">Journal {{dev.etat}}</h3>
+    <h3 class="col-4 {{dev.etat}}">Journal {{dev.etat}} depuis {{timer()}}</h3>
   </ng-template>
 
 </article>   
@@ -61,7 +62,8 @@
           <tr *ngFor="let fait of tabFaits">
             <td>{{fait.date}}</td>
             <td>{{fait.heure}}</td>
-            <td>{{fait.numTache}}</td>
+            <td *ngIf="!fait.contenu">{{fait.numTache}}</td>
+            <td *ngIf="fait.contenu"></td>
             <td><img height=25 src='images/{{fait.type}}.png'></td>
             <td>{{fait.contenu}}</td>
           </tr>

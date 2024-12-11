@@ -1,0 +1,95 @@
+<!--
+  //-----------------------------------
+  //   Fichier : 
+  //   Par:      David Moussette
+  //   Date :    2024-12-11
+  //   modifié par : 
+  //-----------------------------------
+-->
+
+<section *ngIf="visible">
+	<article>
+		<button *ngIf="buttonSession" (click)="switchSessions()">Sessions en cours</button>
+		<button *ngIf="buttonSommaire" (click)="switchSommaire()">Sommaire Développeurs</button>
+	</article>
+	<article *ngIf="sessionsVisible">
+		<h1>Sessions de travail en cours</h1>
+		<table class="table table-striped table-hover table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th>Dev ID</th>
+					<th>Sess ID</th>
+					<th>Début</th>
+					<th>Minutes</th>
+					<th>Heures</th>
+					<th>Tache ID</th>
+					<th>Nb Comm</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let session of tabSessTrav">
+					<td *ngIf="session.fin == undefined">{{session.idDev}}</td>
+					<td *ngIf="session.fin == undefined">{{session.id}}</td>
+					<td *ngIf="session.fin == undefined">{{session.debut}}</td>
+					<td *ngIf="session.fin == undefined">{{getMinutesSession(session.debut)}}</td>
+					<td *ngIf="session.fin == undefined">{{getHeuresSession(session.debut)}}</td>
+					<td *ngIf="session.fin == undefined">{{session.idTache}}</td>
+					<td *ngIf="session.fin == undefined">{{getSessionCommCount(session)}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</article>
+
+	<article *ngIf="sommaireVisible">
+		<h1>Sommaire des sessions de travail</h1>
+		<table class="table table-striped table-hover table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th>Mat + Nom</th>
+					<th>Projet (id)</th>
+					<th>Nb Sess Trav</th>
+					<th>Heures</th>
+					<th>Nb Comm</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let dev of tabDevs">
+					<td (click)="switchDetailDev(dev)">{{dev.matricule}} {{dev.nom}}</td>
+					<td>{{getProjetNameFromID(dev.idProjet)}} ({{dev.idProjet}})</td>
+					<td>{{getDevSessCount(dev)}}</td>
+					<td>{{getDevSumHours(dev)}}</td>
+					<td>{{getDevCommCount(dev)}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</article>
+
+	<article *ngIf="detailDevVisible">
+		<h1>Détails des Sessions de travail de {{devDetail.prenom}} {{devDetail.prenom}}</h1>
+		<table class="table table-striped table-hover table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th>Id Sess</th>
+					<th>Début</th>
+					<th>Fin</th>
+					<th>Minutes</th>
+					<th>Heures</th>
+					<th>Tache ID</th>
+					<th>Nb Comm</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let session of tabSessTrav">
+					<td *ngIf="session.idDev == devDetail.id">{{session.id}}</td>
+					<td *ngIf="session.idDev == devDetail.id">{{session.debut}}</td>
+					<td *ngIf="session.idDev == devDetail.id">{{session.fin}}</td>
+					<td *ngIf="session.idDev == devDetail.id">{{getMinutesSession(session.debut)}}</td>
+					<td *ngIf="session.idDev == devDetail.id">{{getHeuresSession(session.debut)}}</td>
+					<td *ngIf="session.idDev == devDetail.id">{{session.idTache}}</td>
+					<td *ngIf="session.idDev == devDetail.id">{{getSessionCommCount(session)}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</article>
+
+</section>
